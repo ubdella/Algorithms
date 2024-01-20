@@ -21,3 +21,6 @@
 	<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>
 	<li><code>strs[i]</code> consists of lowercase English letters.</li>
 </ul>
+
+<h2>Solution</h2>
+<p>Hashmap. For every word, store its sorted version as key, and the word as a list in value. if it exists as a key, append the word to value. return the values as a list ez. note that sorted() gives a list of characters. so to make it a word. use "".join(sorted()).</p>
