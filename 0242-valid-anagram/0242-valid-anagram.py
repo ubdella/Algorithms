@@ -1,18 +1,16 @@
 class Solution:
-    def isAnagram( self, s: str, t: str) -> bool:
-        if len(s)!=len(t):
-            return False
-        smap = {}
-        tmap = {}
+    def isAnagram(self, s: str, t: str) -> bool:
+        edict = {}
+        for letter in s:
+            if letter in edict:
+                edict[letter] += 1
+            else:
+                edict[letter] = 1
         
-        for i in range(len(s)):
-            smap[s[i]] = smap.get(s[i],0) + 1
-            tmap[t[i]] = tmap.get(t[i],0) + 1
-
-        return smap==tmap
-
-
-
-                
-        
-        
+        fdict = {}
+        for letter in t:
+            if letter in fdict:
+                fdict[letter] += 1
+            else:
+                fdict[letter] = 1
+        return edict==fdict
