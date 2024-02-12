@@ -5,7 +5,7 @@ class Solution:
             if para == '(' or para == '[' or para == '{':
                 stack.append(para)
             elif para == ')' or para == ']' or para == '}' :
-                if not stack:
+                if len(stack)==0:
                     return False
                 top = stack.pop()
                 if para == ')':
@@ -17,7 +17,7 @@ class Solution:
                 elif para == ']':
                     if top!='[':
                         return False
-        return not stack
+        return len(stack)==0
                     
                 
                 
