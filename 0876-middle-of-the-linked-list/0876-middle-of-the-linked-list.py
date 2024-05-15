@@ -5,18 +5,14 @@
 #         self.next = next
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        length = 0
-        
-        dummy = head
-        
-        store = {}
-        
-        while dummy:
-            length += 1
-            store[length] = dummy
-            dummy = dummy.next
-        
-        mid = length//2+1
+        tortoise = hare = head
+        while tortoise:
+            if not hare.next:
+                return tortoise
+            if not hare.next.next:
+                return tortoise.next
+            tortoise = tortoise.next
+            hare = hare.next.next
             
-        return store[mid]
+        
             
