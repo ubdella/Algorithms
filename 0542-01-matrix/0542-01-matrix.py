@@ -4,19 +4,14 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 if mat[i][j] == 0:
-                    q.append((i, j))
+                    q.append((i,j))
                 else:
                     mat[i][j] = '#'
-        
         while q:
-            i, j  = q.popleft()
-            
-            for di, dj in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-                r = i + di
-                c = j + dj
-                if r < 0 or r >= m or c < 0 or c >= n or mat[r][c]!='#':
-                    continue
-                q.append((r, c))
-                mat[r][c] = mat[i][j] + 1
+            i, j = q.popleft()
+            for di, dj in (-1, 0), (1, 0), (0, -1), (0, 1):
+                if i+di>=0 and i+di < m and j + dj >=0 and j+dj < n and mat[di + i][dj + j] == '#':
+                    mat[di + i][dj + j] = mat[i][j] + 1
+                    q.append((di+i, dj+j))
         return mat
         
