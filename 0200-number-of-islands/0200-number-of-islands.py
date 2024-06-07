@@ -12,7 +12,6 @@ class Solution:
                 dfs(i-1, j)
                 dfs(i, j+1)
                 dfs(i, j-1)
-        
         for i in range(len(grid)):
             for j in range(len(grid[0])):
                 if (i, j) in visited or grid[i][j]=="0":
