@@ -1,6 +1,6 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        minute = -1
+        minute = 0
         q = deque()
         visited = set()
         good = set()
@@ -20,7 +20,7 @@ class Solution:
         if not q:
             return -1
         
-        while q:
+        while q and good:
             qLen = len(q)
             while qLen:
                 i, j = q.popleft()
