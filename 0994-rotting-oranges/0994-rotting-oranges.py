@@ -14,10 +14,6 @@ class Solution:
                 else:
                     q.append((i,j))
                     
-        if not good:
-            return 0
-        if not q:
-            return -1
         
         while q and good:
             qLen = len(q)
