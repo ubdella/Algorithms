@@ -5,9 +5,10 @@ class Solution:
             if not box:
                 res.append(curr)
                 return
-            for char in box:
-                box.remove(char)
-                dfs(curr+[char], box.copy())
-                box.add(char)
-        dfs([], set(nums))
+            for i in range(len(box)):
+                sendbox = box.copy()
+                sendbox.pop(i)
+                dfs(curr+[box[i]],sendbox)
+        
+        dfs([], nums)
         return res
