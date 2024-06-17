@@ -1,14 +1,16 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         res = []
-        def dfs(curr, box):
-            if not box:
-                res.append(curr)
-                return
-            for i in range(len(box)):
-                sendbox = box.copy()
-                sendbox.pop(i)
-                dfs(curr+[box[i]],sendbox)
-        
-        dfs([], nums)
+
+        if len(nums) == 1:
+            return [nums[:]]
+
+        for i in range(len(nums)):
+            n = nums.pop(0)
+            perms = self.permute(nums)
+
+            for perm in perms:
+                perm.append(n)
+            res.extend(perms)
+            nums.append(n)
         return res
