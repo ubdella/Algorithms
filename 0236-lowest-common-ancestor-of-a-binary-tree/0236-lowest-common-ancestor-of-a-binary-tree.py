@@ -16,5 +16,6 @@ class Solution:
         if l and r:
             return root
         else:
+            print(l or r)
             return l or r
             
