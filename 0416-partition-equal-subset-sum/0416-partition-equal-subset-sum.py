@@ -13,5 +13,6 @@ class Solution:
                 if t+nums[i]==target: return True
                 dp_1.add(t+nums[i])
             dp = dp_1
+            print(len(dp))
         return False
             
