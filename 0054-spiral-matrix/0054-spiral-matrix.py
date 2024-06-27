@@ -4,25 +4,25 @@ class Solution:
         directions = {'right': (0, 1), 'left' : (0, -1), 'up' : (-1, 0), 'down' : (1, 0)}
         
         
-        def hitsWall(i, j):
+        def hitsWall(i, j): #Constant
             if i>=len(matrix) or i <0 or j<0 or j>=len(matrix[0]) or (i, j) in visited:
                 return True
             return False
         
-        res = []
+        res = [] #n
         
-        visited = set()
+        visited = set() #n
         
         q = deque()
         q.append((0,0))
         
         direction = 'right'
-        while q:
+        while q: #O(n)
             i, j = q.popleft()
-            if hitsWall(i, j):
+            if hitsWall(i, j): #1
                 break
 
-            visited.add((i, j))
+            visited.add((i, j))#1
             
             res.append(matrix[i][j])
             
