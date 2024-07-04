@@ -3,12 +3,11 @@ class Solution:
         carry = 0
         result = ''
         
-        if len(a) > len(b):
-            for i in range(len(a) - len(b)):
-                b = '0' + b
-        else:
-            for i in range(len(b) - len(a)):
-                a = '0' + a
+
+        while len(a) != len(b):
+            if len(a)>len(b): b = '0' + b
+            if len(b)>len(a) : a = '0' + a
+
         
         for i in range(len(a)-1, -1, -1):
             s = carry + int(a[i]) + int(b[i])
