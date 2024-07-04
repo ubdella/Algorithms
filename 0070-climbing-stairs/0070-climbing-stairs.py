@@ -1,4 +1,5 @@
 class Solution:
+    @cache
     def climbStairs(self, n: int) -> int:
         res = [1, 2]
         for i in range(2, n):
