@@ -6,7 +6,7 @@
 class Solution:
     def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
         tortoise = hare = head
-        while tortoise:
+        while hare:
             if not hare.next:
                 return tortoise
             if not hare.next.next:
