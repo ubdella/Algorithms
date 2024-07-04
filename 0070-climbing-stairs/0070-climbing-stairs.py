@@ -1,7 +1,7 @@
 class Solution:
     @cache
     def climbStairs(self, n: int) -> int:
-        if n<0: return 0
-        if n==0: return 1
-        numWays = self.climbStairs(n-1) + self.climbStairs(n-2)
-        return numWays
+        res = [1, 2]
+        for i in range(2, n):
+            res.append(res[i-1]+res[i-2])
+        return res[n-1]
