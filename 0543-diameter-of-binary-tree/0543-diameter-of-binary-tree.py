@@ -12,7 +12,6 @@ class Solution:
 
             if not root: return 0
             left, right = maxDepth(root.left), maxDepth(root.right)
-            global res
             self.res = max(self.res, left+right)
             return max(left, right) + 1
         maxDepth(root)
