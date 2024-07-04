@@ -1,18 +1,9 @@
 class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
-        m = {}
-        for char in magazine:
-            if char in m:
-                m[char] +=1
-            else:
-                m[char] = 1
+        magCounter = Counter(magazine)
+        noteCounter = Counter(ransomNote)
         
-        for char in ransomNote:
-            if char in m:
-                if m[char] == 1:
-                    del m[char]
-                else:
-                    m[char] -=1
-            else:
-                return False
+        for key in noteCounter.keys():
+            if key not in magCounter or noteCounter[key]>magCounter[key]: return False
+            
         return True
