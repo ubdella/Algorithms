@@ -1,11 +1,18 @@
 class Solution:
     def minimumSwaps(self, nums: List[int]) -> int:
-        if len(nums) <= 1:
-            return 0
-        minidx, maxidx = -1, -1
-        for idx, val in enumerate(nums):
-            if minidx < 0 or nums[idx] < nums[minidx]:
-                minidx = idx
-            if maxidx < 0 or nums[idx] >= nums[maxidx]:
-                maxidx = idx
-        return minidx + (len(nums) - maxidx - 1) - (minidx >= maxidx)
+        n = len(nums)
+        if n<=1: return 0
+        
+        minPos = nums.index(min(nums))
+        maxPos = n-1-nums[::-1].index(max(nums))
+        
+        #for min element
+        minSwaps = minPos
+        
+        #for max element
+        maxSwaps = n-1-maxPos
+        
+        if minPos>maxPos:
+            return minSwaps + maxSwaps -1
+        else:
+            return minSwaps +maxSwaps
