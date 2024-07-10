@@ -1,39 +1,39 @@
 class Solution:
     def platesBetweenCandles(self, s: str, queries: List[List[int]]) -> List[int]:
         n = len(s)
-        
-        # Preprocess the string
 
-        prefix_sum = [0] * (n + 1)
-        nearest_left_candle = [-1] * n
-        nearest_right_candle = [-1] * n
+
+        nearestLeftCandle = [-1]*n
+        nearestRightCandle = [-1]*(n)
+        platesYet = [0]*(n+1)
         
-        # Build preprocessing arrays
-        last_candle = -1
         for i in range(n):
-            if s[i] == '|':
- 
-                last_candle = i
-            nearest_left_candle[i] = last_candle
-            prefix_sum[i + 1] = prefix_sum[i] + (s[i] == '*')
+            platesYet[i] = platesYet[i-1] + (1 if s[i] == '*' else 0)
+            if s[i] == '|': nearestLeftCandle[i] = i
+            else: 
+                if i-1>=0:
+                    nearestLeftCandle[i] = nearestLeftCandle[i-1]
+                    
+        for i in range(n-1, -1, -1):
+            if s[i] == '|': nearestRightCandle[i] = i
+            else:
+                if i+1<n:
+                    nearestRightCandle[i] = nearestRightCandle[i+1]
+                    
+                    
+        res = []
         
-        last_candle = -1
-        for i in range(n - 1, -1, -1):
-            if s[i] == '|':
-                last_candle = i
-            nearest_right_candle[i] = last_candle
         
-        def count_plates(left: int, right: int) -> int:
-            # Find the positions of the leftmost and rightmost candles within the query range
-            left_candle = nearest_right_candle[left]
-            right_candle = nearest_left_candle[right]
+        for left, right in queries:
+            left, right = nearestRightCandle[left], nearestLeftCandle[right]
+            if right<=left or right == -1 or left == -1: 
+                res.append(0)
+                continue
+            res.append(platesYet[right]-platesYet[left])
             
-            # If there are fewer than 2 candles in the range, or if they're in the wrong order, return 0
-            if left_candle == -1 or right_candle == -1 or left_candle >= right_candle:
-                return 0
-            
-            # Calculate the number of plates between the candles
-            return prefix_sum[right_candle] - prefix_sum[left_candle]
+        return res
+                    
         
-        # Process each query
-        return [count_plates(left, right) for left, right in queries]
+                    
+            
+        
