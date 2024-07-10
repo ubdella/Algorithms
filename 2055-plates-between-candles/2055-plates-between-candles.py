@@ -3,7 +3,7 @@ class Solution:
         n = len(s)
         
         # Preprocess the string
-        candle_positions = []
+
         prefix_sum = [0] * (n + 1)
         nearest_left_candle = [-1] * n
         nearest_right_candle = [-1] * n
@@ -12,7 +12,7 @@ class Solution:
         last_candle = -1
         for i in range(n):
             if s[i] == '|':
-                candle_positions.append(i)
+ 
                 last_candle = i
             nearest_left_candle[i] = last_candle
             prefix_sum[i + 1] = prefix_sum[i] + (s[i] == '*')
