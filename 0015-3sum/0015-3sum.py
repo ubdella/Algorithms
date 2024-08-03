@@ -16,9 +16,9 @@ class Solution:
                     res.append([nums[i], nums[j], nums[k]])
                     j += 1
                     k -= 1
-                    while j>i+1 and nums[j] == nums[j-1] and j<k: 
+                    while nums[j] == nums[j-1] and j<k: 
                         j+=1
-                    while k<n-1 and nums[k] == nums[k + 1] and j<k: 
+                    while nums[k] == nums[k + 1] and j<k: 
                         k-=1
                 elif treSum < 0:
                     j += 1
