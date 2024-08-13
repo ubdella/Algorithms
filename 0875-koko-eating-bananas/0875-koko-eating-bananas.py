@@ -4,8 +4,7 @@ class Solution:
             if k == 0: return False
             hoursLeft = h
             for pile in piles:
-                needed = pile / k if pile % k == 0 else pile // k + 1
-                hoursLeft -= needed
+                hoursLeft -= math.ceil(pile/k)
             return hoursLeft >= 0
         
         l, r = 1, max(piles)
