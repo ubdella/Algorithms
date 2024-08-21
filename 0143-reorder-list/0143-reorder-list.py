@@ -22,5 +22,4 @@ class Solution:
             r -= 1
             l += 1
         array[r].next = None
-        return head
             
