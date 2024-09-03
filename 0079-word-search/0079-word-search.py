@@ -15,6 +15,6 @@ class Solution:
         for i in range(len(board)):
             for j in range(len(board[0])):
                 visited = set()
-                if dfs(0, i, j):
+                if word[0] == board[i][j] and dfs(0, i, j):
                     return True
         return False
