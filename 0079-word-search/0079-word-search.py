@@ -12,9 +12,9 @@ class Solution:
                 if dfs(pos + 1, i + di, j + dj):
                     return True
             visited.remove((i, j))
+        visited = set()
         for i in range(len(board)):
             for j in range(len(board[0])):
-                visited = set()
                 if word[0] == board[i][j] and dfs(0, i, j):
                     return True
         return False
