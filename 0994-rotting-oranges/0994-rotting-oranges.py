@@ -1,9 +1,6 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        minute = 0
-        q = deque()
-        good = 0
-        m, n = len(grid), len(grid[0])
+        minute, good, q, m, n = 0, 0, deque(), len(grid), len(grid[0])
         for i in range(m):
             for j in range(n):
                 cell = grid[i][j]
@@ -13,8 +10,6 @@ class Solution:
                     good+=1
                 else:
                     q.append((i,j))
-                    
-        
         while q and good:
             qLen = len(q)
             while qLen:
@@ -24,12 +19,10 @@ class Solution:
                     newI, newJ = i+di, j+dj
                     if newI>=m or newI<0 or newJ>=n or newJ<0 or grid[newI][newJ]==0 or grid[newI][newJ]==2:
                         continue
-
                     grid[newI][newJ]=2
                     q.append((newI, newJ))
                     good-=1
-            minute+=1
-                        
+            minute+=1      
         return minute if not good else -1
         
 
