@@ -1,38 +1,27 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        
-        
-        graph = [[] for _ in range(numCourses)]
-        
+        adjList = {i: [] for i in range(numCourses)}
         for course, prereq in prerequisites:
-            graph[course].append(prereq)
-            
-        
-        visited = [0] * numCourses
-        
-        result = []
+            adjList[course].append(prereq)
         
         def dfs(course):
-            
-            if visited[course] == 1:
+            if course in visited:
                 return False
-            
-            if visited[course] == 2:
+            if course in added:
                 return True
-                
-            visited[course] = 1
-            
-            for prereq in graph[course]:
-                if not dfs(prereq):
+            visited.add(course)
+            for p in adjList[course]:
+                if not dfs(p):
                     return False
-                
-                
-            visited[course]=2
-            
-            result.append(course)
+            visited.remove(course)
+            res.append(course)
+            added.add(course)
             return True
         
-        for course in range(numCourses):
-            if not dfs(course): return []
-            
-        return result
+        added, visited, res = set(), set(), []
+        
+        for c in range(numCourses):
+            if not dfs(c): return []
+        
+        return res
+        
