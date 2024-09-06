@@ -1,27 +1,26 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adjList = {}
-        visited = set()
-        
-        adjList = {i:[] for i in range(numCourses)}
-        for pair in prerequisites:
-            adjList[pair[0]].append(pair[1])
-
-        def dfs(c):
-            if c in visited:
+        graph = {i: [] for i in range(numCourses)}
+        for course, prerequisite in prerequisites:
+            graph[course].append(prerequisite)
+            
+        def dfs(course):
+            if course in visited:
                 return False
-            if not adjList[c]:
+            if not graph[course]:
                 return True
-            visited.add(c)
-            for prereq in adjList[c]:
-                if not dfs(prereq): return False
-            visited.remove(c)
-            adjList[c] = []
+            visited.add(course)
+            for preq in graph[course]:
+                if not dfs(preq):
+                    return False
+            visited.remove(course)
+            graph[course] = []
             return True
+        visited = set()
         for c in range(numCourses):
-            if not dfs(c): return False
+            if not dfs(c):
+                return False
         return True
-
-                
-                
+            
+        
                 
