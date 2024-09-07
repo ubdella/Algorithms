@@ -1,9 +1,16 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        one, two = 1, 1
-        for i in range(n-1):
-            temp = one
-            one = one + two
-            two = temp
-        return one
+        cache = {}
+        def dfs(remaining):
+            if remaining in cache:
+                return cache[remaining]
+            if not remaining:
+                return 1
+            if remaining < 0:
+                return 0
+            one, two = dfs(remaining - 1), dfs(remaining - 2)
+            cache[remaining] = one + two
+            return cache[remaining]
+        dfs(n)
+        return cache[n]
         
