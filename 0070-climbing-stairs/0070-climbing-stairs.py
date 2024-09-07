@@ -11,6 +11,5 @@ class Solution:
             one, two = dfs(remaining - 1), dfs(remaining - 2)
             cache[remaining] = one + two
             return cache[remaining]
-        dfs(n)
-        return cache[n]
+        return dfs(n)
         
