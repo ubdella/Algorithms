@@ -1,15 +1,7 @@
 class Solution:
+    @cache
     def climbStairs(self, n: int) -> int:
-        cache = {}
-        def dfs(remaining):
-            if remaining in cache:
-                return cache[remaining]
-            if not remaining:
-                return 1
-            if remaining < 0:
-                return 0
-            one, two = dfs(remaining - 1), dfs(remaining - 2)
-            cache[remaining] = one + two
-            return cache[remaining]
-        return dfs(n)
+        if not n: return 1
+        if n < 0: return 0
+        return self.climbStairs(n - 1) + self.climbStairs(n - 2)
         
