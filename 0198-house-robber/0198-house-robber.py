@@ -1,9 +1,11 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        n = len(nums)
-        prev, cur = 0, 0
-        for num in nums:
-            nxt = max(cur, prev + num)
-            prev = cur
-            cur = nxt
-        return cur
+        @cache
+        def dfs(i):
+            if i == 0:
+                return nums[0]
+            if i == 1:
+                return max(nums[0], nums[1])
+            return max(dfs(i - 1), nums[i] + dfs(i - 2))
+                       
+        return dfs(len(nums ) - 1)
