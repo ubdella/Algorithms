@@ -11,7 +11,7 @@ class Solution:
             if s[i] == '0':
                 return 0
             numWays = dp(i + 1)
-            if int(s[i : i + 2])> 9 and int(s[i : i + 2]) <= 26:
+            if int(s[i : i + 2]) <= 26:
                 numWays += dp(i + 2)
             return numWays 
         return dp(0)
