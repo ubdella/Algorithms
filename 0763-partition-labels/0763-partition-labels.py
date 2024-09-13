@@ -1,21 +1,15 @@
 class Solution:
-    def partitionLabels(self, S: str) -> List[int]:
-        count = {}
-        res = []
-        i, length = 0, len(S)
-        for j in range(length):
-            c = S[j]
-            count[c] = j
-
-        curLen = 0
-        goal = 0
-        while i < length:
-            c = S[i]
-            goal = max(goal, count[c])
-            curLen += 1
-
-            if goal == i:
-                res.append(curLen)
-                curLen = 0
-            i += 1
-        return res
+    def partitionLabels(self, s: str) -> List[int]:
+        last_occurrence = {char: index for index, char in enumerate(s)}
+        
+        partitions = []
+        start = end = 0
+        
+        for index, char in enumerate(s):
+            end = max(end, last_occurrence[char])
+            
+            if index == end:
+                partitions.append(end - start + 1)
+                start = index + 1
+        
+        return partitions
