@@ -3,7 +3,8 @@ class Solution:
         def getOnes(bits):
             ones = 0
             while bits:
-                ones += bits & 1
+                if bits % 2 != 0:
+                    ones += bits & 1
                 bits = bits >> 1
             return ones
         res = []
