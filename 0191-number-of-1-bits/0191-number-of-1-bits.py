@@ -1,9 +1,7 @@
 class Solution:
     def hammingWeight(self, n: int) -> int:
-        binary  = bin(n)
-        print(binary)
-        cnt = 0
-        for digit in binary:
-            if digit == '1':
-                cnt += 1
-        return cnt
+        res = 0
+        while n:
+            res += n % 2
+            n = n >> 1
+        return res
