@@ -3,9 +3,8 @@ class Solution:
         def getOnes(bits):
             ones = 0
             while bits:
-                if bits % 2 != 0:
-                    ones += 1
-                bits = bits >> 1
+                ones += 1
+                bits = bits & (bits - 1)
             return ones
         res = []
         for digit in range(n + 1):
