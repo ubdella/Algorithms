@@ -1,6 +1,13 @@
 class Solution:
-    def getSum(self, a, b):
-        mask = 0xFFFFFFFF  # 32-bit mask
+    def getSum(self, a: int, b: int) -> int:
+        mask = 0xffffffff
+
         while b != 0:
-            a, b = (a ^ b) & mask, ((a & b) << 1) & mask
-        return a if a <= 0x7FFFFFFF else ~(a ^ mask)
+            tmp = (a & b) << 1
+            a = (a ^ b) & mask
+            b = tmp & mask
+
+        if a > mask // 2:
+            return ~(a ^ mask)
+        else:
+            return a
