@@ -1,17 +1,17 @@
 class Solution:
-    def reverse(self, x):
-        # Determine the sign of the input
-        sign = 1 if x >= 0 else -1
-        x = abs(x)
+    def reverse(self, x: int) -> int:
+        MIN = -2147483648  # -2^31,
+        MAX = 2147483647  #  2^31 - 1
 
-        reversed_num = 0
-        while x != 0:
-            # Check for potential overflow before adding the next digit
-            if reversed_num > (2**31 - 1) // 10:
+        res = 0
+        while x:
+            digit = int(math.fmod(x, 10))
+            x = int(x / 10)
+
+            if res > MAX // 10 or (res == MAX // 10 and digit > MAX % 10):
                 return 0
+            if res < MIN // 10 or (res == MIN // 10 and digit < MIN % 10):
+                return 0
+            res = (res * 10) + digit
 
-            digit = x % 10
-            reversed_num = reversed_num * 10 + digit
-            x //= 10
-
-        return sign * reversed_num
+        return res
