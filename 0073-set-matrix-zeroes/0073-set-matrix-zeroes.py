@@ -1,24 +1,26 @@
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
-        def mark(i, j):
-            for k in range(0, n):
-                if matrix[i][k] != 0:
-                    matrix[i][k] = 'X'
-            for k in range(0, m):
-                if matrix[k][j] != 0:
-                    matrix[k][j] = 'X'
-                
-        m, n = len(matrix), len(matrix[0])
-        
-        for i in range(m):
-            for j in range(n):
-                if matrix[i][j] == 0:
-                    mark(i, j)
-                    
-        for i in range(m):
-            for j in range(n):
-                if matrix[i][j] == 'X':
-                    matrix[i][j] = 0
+        ROWS, COLS = len(matrix), len(matrix[0])
+        rowZero = False
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if matrix[r][c] == 0:
+                    matrix[0][c] = 0
+                    if r > 0:
+                        matrix[r][0] = 0
+                    else:
+                        rowZero = True
+
+        for r in range(1, ROWS):
+            for c in range(1, COLS):
+                if matrix[0][c] == 0 or matrix[r][0] == 0:
+                    matrix[r][c] = 0
+
+        if matrix[0][0] == 0:
+            for r in range(ROWS):
+                matrix[r][0] = 0
+
+        if rowZero:
+            for c in range(COLS):
+                matrix[0][c] = 0
