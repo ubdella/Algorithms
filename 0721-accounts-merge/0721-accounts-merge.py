@@ -6,7 +6,8 @@ class Solution:
                 a = find(par[a])
             return par[a]
         def union(a, b):
-            par[find(b)] = find(a)
+            parA, parB = find(a), find(b)
+            par[parB] = parA
         
         emailToIndices = defaultdict(list)
         for i, account in enumerate(accounts):
