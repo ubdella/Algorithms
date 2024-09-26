@@ -11,8 +11,8 @@ class Solution:
         
         emailToIndices = defaultdict(list)
         for i, account in enumerate(accounts):
-            for email in account[1:]:
-                emailToIndices[email].append(i)
+            for j in range(1, len(account)):
+                emailToIndices[account[j]].append(i)
         
         for indices in emailToIndices.values():
             parIndex = indices[0]
