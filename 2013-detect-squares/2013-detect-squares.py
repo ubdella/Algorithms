@@ -1,21 +1,19 @@
 from collections import defaultdict
-
 class DetectSquares:
     def __init__(self):
-        self.point_counts = defaultdict(int)
-        # self.points = []
-
+        self.ref = defaultdict(int)
+        
     def add(self, point):
-        x, y = point
-        self.point_counts[(x, y)] += 1
-        # self.points.append((x, y))
-
+        self.ref[(point[0], point[1])] += 1
+        
     def count(self, point):
-        qx, qy = point
-        count = 0
+        result = 0
+        for curPoint in self.ref.keys():
+            if (point[0], point[1]) == curPoint:	continue
 
-        for x, y in list(self.point_counts.keys()):
-            if abs(qx - x) == abs(qy - y) and qx != x and qy != y:
-                count += self.point_counts[(x, y)] * self.point_counts[(x, qy)] * self.point_counts[(qx, y)]
+            if abs(curPoint[0] - point[0]) != abs(curPoint[1] - point[1]):	continue
 
-        return count
+            if (curPoint[0], point[1]) in self.ref and (point[0], curPoint[1]) in self.ref:
+                result += self.ref[curPoint] * self.ref[(curPoint[0], point[1])] * self.ref[(point[0], curPoint[1])]
+
+        return result
