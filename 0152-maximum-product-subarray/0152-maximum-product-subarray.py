@@ -1,21 +1,15 @@
 class Solution:
     def maxProduct(self, nums):
-        if not nums:
-            return 0
-
-        n = len(nums)
-        prefix_product = suffix_product = 1
+        minProduct = 1
+        maxProduct = 1
         result = float('-inf')
-
-        for i in range(n):
-            prefix_product *= nums[i]
-            suffix_product *= nums[n-1-i]
-            result = max(result, prefix_product, suffix_product)
-
-            if prefix_product == 0:
-                prefix_product = 1
-            if suffix_product == 0:
-                suffix_product = 1
-
+        for num in nums:
+            if num == 0:
+                minProduct, maxProduct = 1, 1
+                result = max(result, 0)
+                continue
+            maxMult, minMult = maxProduct * num, minProduct * num
+            minProduct = min(maxMult, minMult, num)
+            maxProduct = max(maxMult, minMult, num)
+            result = max(result, maxProduct)
         return result
-                    
