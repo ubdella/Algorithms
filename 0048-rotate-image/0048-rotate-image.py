@@ -1,26 +1,16 @@
 class Solution:
     def rotate(self, matrix):
         n = len(matrix)
-
-        # Iterate through each layer
-        for layer in range(n // 2):
-            first = layer
-            last = n - 1 - layer
-
-            for i in range(first, last):
-                offset = i - first
-
-                # Save top
-                top = matrix[first][i]
-
-                # Left -> Top
-                matrix[first][i] = matrix[last-offset][first]
-
-                # Bottom -> Left
-                matrix[last-offset][first] = matrix[last][last-offset]
-
-                # Right -> Bottom
-                matrix[last][last-offset] = matrix[i][last]
-
-                # Top -> Right
-                matrix[i][last] = top
+        left = 0
+        right = n - 1
+        row = 0
+        while left < right:
+            for col in range(left, right):
+                temp = matrix[row][col]
+                matrix[row][col] = matrix[n - 1 - col][row]
+                matrix[n - 1 - col][row] = matrix[n - 1 - row][n - 1 - col]
+                matrix[n - 1 - row][n - 1 - col] = matrix[col][ n - 1 - row]
+                matrix[col][ n - 1 - row] = temp
+            left += 1
+            right -= 1
+            row += 1
