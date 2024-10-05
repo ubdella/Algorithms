@@ -15,8 +15,8 @@ class Solution:
                 cnt = 1 + heapq.heappop(ready)
                 if cnt:
                     coolingDown.append((cnt, time + n))
-            else:
-                time = coolingDown[0][1]
+            # else:
+            #     time = coolingDown[0][1]
             
             if coolingDown and coolingDown[0][1] == time:
                 heapq.heappush(ready, coolingDown.popleft()[0])
