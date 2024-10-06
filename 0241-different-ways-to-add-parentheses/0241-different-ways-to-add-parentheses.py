@@ -1,25 +1,23 @@
 class Solution:
-    def diffWaysToCompute(self, expression: str) -> List[int]:
-        def compute(left, right, op):
-            results = []
-            for l in left:
-                for r in right:
-                    if op == '+':
-                        results.append(l + r)
-                    elif op == '-':
-                        results.append(l - r)
-                    elif op == '*':
-                        results.append(l * r)
-            return results
-
-        if expression.isdigit():
-            return [int(expression)]
-
-        results = []
-        for i, char in enumerate(expression):
-            if char in ['+', '-', '*']:
-                left = self.diffWaysToCompute(expression[:i])
-                right = self.diffWaysToCompute(expression[i+1:])
-                results.extend(compute(left, right, char))
-
-        return results
+	def evaluate(self, a,b,opr):
+		if opr =='-':
+			return a - b
+		if opr =='+':
+			return a + b
+		if opr == '*':
+			return a * b
+	def diffWaysToCompute(self, expression):
+		operatorsIndices = []
+		for i in range(len(expression)):
+			if not expression[i].isdigit():
+				operatorsIndices.append(i)
+		if not operatorsIndices:
+			return [int(expression)]
+		result = []
+		for index in operatorsIndices:
+			left = self.diffWaysToCompute(expression[:index])
+			right = self.diffWaysToCompute(expression[index + 1:])
+			for num1 in left:
+				for num2 in right:
+					result.append(self.evaluate(num1, num2, expression[index]))
+		return result
