@@ -6,5 +6,5 @@ class Solution:
                 return 0
             if prices[i] > prices[j]:
                 return dp(j, j + 1)
-            return max(prices[j] - prices[i] + dp(j + 2, j + 3), dp(i, j + 1), dp(i + 1, j + 1))
+            return max(prices[j] - prices[i] + dp(j + 2, j + 3), dp(i, j + 1))
         return dp(0, 1)
