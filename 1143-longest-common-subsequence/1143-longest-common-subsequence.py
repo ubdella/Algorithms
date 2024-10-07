@@ -13,5 +13,5 @@ class Solution:
                 else:
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1])
         
-        # The bottom-right cell contains the length of the LCS
+
         return dp[m][n]
