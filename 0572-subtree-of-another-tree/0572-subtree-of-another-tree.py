@@ -6,8 +6,8 @@
 #         self.right = right
 class Solution:
     def isSubtree(self, root, subRoot):
-        if not subRoot: return True
-        if not root: return False
+        if not subRoot and not root: return True
+        if not root or not subRoot: return False
         if root.val == subRoot.val:
             if self.isSameTree(root, subRoot): return True
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
