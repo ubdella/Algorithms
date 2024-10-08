@@ -1,15 +1,16 @@
 class Solution:
-	def maxProfit(self, nums):
-		@cache
-		def dfs(i, stockStatus):
-			if i >= len(nums):
-				return 0
-			result = 0
-			if stockStatus == 'idle':
-				result = dfs(i + 1, stockStatus)
-				result = max(result, dfs(i + 1, 'bought') - nums[i])
-			else:
-				result = dfs(i + 1, stockStatus)
-				result = max(result, dfs(i + 2, 'idle') + nums[i])
-			return result
-		return dfs(0, 'idle')
+    def maxProfit(self, nums):
+        @cache
+        def dfs(i, status):
+            if i >= len(nums):
+                return 0
+            if status == 'buying':
+                skip = dfs(i + 1, 'buying')
+                buy = dfs(i + 1, 'selling') - nums[i]
+                return max(skip, buy)
+            else:
+                skip = dfs(i + 1, 'selling')
+                sell = dfs(i + 2, 'buying') + nums[i]
+                return max(skip, sell)
+        return dfs(0, 'buying')
+            
