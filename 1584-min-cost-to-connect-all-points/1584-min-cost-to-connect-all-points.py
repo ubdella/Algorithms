@@ -3,9 +3,8 @@ class Solution:
         minHeap = []
         for i in range(len(points)):
             for j in range(i + 1, len(points)):
-                minHeap.append((abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j))
+                heapq.heappush(minHeap, (abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j))
         
-        heapq.heapify(minHeap)
         
         visited = set()
         
