@@ -6,8 +6,6 @@ class Solution:
                 heapq.heappush(minHeap, (abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j))
         
         
-        visited = set()
-        
         totalCost = 0
         
         uf = UnionFind(len(points))
@@ -16,8 +14,7 @@ class Solution:
             cost, i, j = heapq.heappop(minHeap)
             if uf.union(i, j):
                 totalCost += cost
-            visited.add(i)
-            visited.add(j)
+
             
         return totalCost
     
