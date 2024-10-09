@@ -2,7 +2,7 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         
         def dfs(openLeft, closedLeft, s):
-            if not openLeft and not closedLeft: 
+            if len(s) == 2 * n: 
                 res.append(s)
                 return
             
