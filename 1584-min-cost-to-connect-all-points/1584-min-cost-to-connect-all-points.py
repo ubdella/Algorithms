@@ -1,44 +1,39 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        minHeap = []
-        for i in range(len(points)):
-            for j in range(i + 1, len(points)):
-                heapq.heappush(minHeap, (abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j))
+        n = len(points)
+        if n < 2:
+            return 0
         
-        totalCost = 0
-        uf = UnionFind(len(points))
-        ct = 0
-        while ct != len(points) - 1:
-            cost, i, j = heapq.heappop(minHeap)
-            if uf.union(i, j):
-                totalCost += cost
-                ct += 1
-        return totalCost
-    
-    
-    
-class UnionFind:
-    def __init__(self, n):
-        self.parent = [i for i in range(n)]
-        self.rank = [1] * n
+        # Calculate Manhattan distance between two points
+        def distance(p1, p2):
+            return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
         
-    def find(self, x):
-        if self.parent[x] != x:
-            x = self.parent[x]
-        else:
-            return x
-        return self.find(self.parent[x])
-    
-    def union(self, a, b):
-        parA, parB = self.find(a), self.find(b)
+        # Initialize data structures
+        mst_set = [False] * n
+        min_distances = [float('inf')] * n
+        min_distances[0] = 0
+        total_cost = 0
         
-        if parA == parB:
-            return False
-        
-        if self.rank[parA] > self.rank[parB]:
-            self.parent[parB] = parA
-        else:
-            self.parent[parA] = parB
+        for _ in range(n):
+            # Find the vertex with the minimum distance
+            min_dist = float('inf')
+            min_vertex = -1
+            for v in range(n):
+                if not mst_set[v] and min_distances[v] < min_dist:
+                    min_dist = min_distances[v]
+                    min_vertex = v
             
-        return True
+            # Add the minimum distance to the total cost
+            total_cost += min_dist
+            
+            # Mark the chosen vertex as processed
+            mst_set[min_vertex] = True
+            
+            # Update min_distances for adjacent vertices
+            for v in range(n):
+                if not mst_set[v]:
+                    dist = distance(points[min_vertex], points[v])
+                    if dist < min_distances[v]:
+                        min_distances[v] = dist
         
+        return total_cost
