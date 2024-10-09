@@ -1,47 +1,25 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        minHeap = []
-        for i in range(len(points)):
-            for j in range(i + 1, len(points)):
-                heapq.heappush(minHeap, (abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]), i, j))
-        
-        
-        totalCost = 0
-        
-        uf = UnionFind(len(points))
-        
-        while minHeap:
-            cost, i, j = heapq.heappop(minHeap)
-            if uf.union(i, j):
-                totalCost += cost
+        N = len(points)
+        adj = {i: [] for i in range(N)}
+        for i in range(N):
+            x1, y1 = points[i]
+            for j in range(i + 1, N):
+                x2, y2 = points[j]
+                dist = abs(x1 - x2) + abs(y1 - y2)
+                adj[i].append([dist, j])
+                adj[j].append([dist, i])
 
-            
-        return totalCost
-    
-    
-    
-class UnionFind:
-    def __init__(self, n):
-        self.parent = [i for i in range(n)]
-        self.rank = [1] * n
-        
-    def find(self, x):
-        if self.parent[x] != x:
-            x = self.parent[x]
-        else:
-            return x
-        return self.find(self.parent[x])
-    
-    def union(self, a, b):
-        parA, parB = self.find(a), self.find(b)
-        
-        if parA == parB:
-            return False
-        
-        if self.rank[parA] > self.rank[parB]:
-            self.parent[parB] = parA
-        else:
-            self.parent[parA] = parB
-            
-        return True
-        
+        res = 0
+        visit = set()
+        minH = [[0, 0]]
+        while len(visit) < N:
+            cost, i = heapq.heappop(minH)
+            if i in visit:
+                continue
+            res += cost
+            visit.add(i)
+            for neiCost, nei in adj[i]:
+                if nei not in visit:
+                    heapq.heappush(minH, [neiCost, nei])
+        return res
