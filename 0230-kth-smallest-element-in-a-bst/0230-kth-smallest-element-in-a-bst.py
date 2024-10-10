@@ -1,20 +1,21 @@
 class Solution:
     def kthSmallest(self, root, k):
-        self.k = k
-        self.result = None
+        result = None
         
         def dfs(node):
+            nonlocal k
+            nonlocal result
             if not node:
                 return
             
             dfs(node.left)
             
-            self.k -= 1
-            if self.k == 0:
-                self.result = node.val
+            k -= 1
+            if k == 0:
+                result = node.val
                 return
             
             dfs(node.right)
         
         dfs(root)
-        return self.result
+        return result
