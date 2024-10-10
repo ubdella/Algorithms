@@ -1,14 +1,20 @@
 class Solution:
     def kthSmallest(self, root, k):
-        stack = []
-        while stack or root:
-            while root:
-                stack.append(root)
-                root = root.left
-            root = stack.pop()
-            k -= 1
-            if k == 0: return root.val
-            root = root.right
+        self.k = k
+        self.result = None
+        
+        def dfs(node):
+            if not node:
+                return
             
-
-
+            dfs(node.left)
+            
+            self.k -= 1
+            if self.k == 0:
+                self.result = node.val
+                return
+            
+            dfs(node.right)
+        
+        dfs(root)
+        return self.result
