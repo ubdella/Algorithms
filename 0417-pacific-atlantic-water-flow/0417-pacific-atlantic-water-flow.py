@@ -1,25 +1,25 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        if not heights or not heights[0]:
-            return []
-        
-        m, n = len(heights), len(heights[0])
-        pacific = [[False] * n for _ in range(m)]
-        atlantic = [[False] * n for _ in range(m)]
-        
-        def dfs(i, j, reachable):
-            reachable[i][j] = True
-            for di, dj in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                ni, nj = i + di, j + dj
-                if 0 <= ni < m and 0 <= nj < n and not reachable[ni][nj] and heights[ni][nj] >= heights[i][j]:
-                    dfs(ni, nj, reachable)
-        
-        for i in range(m):
-            dfs(i, 0, pacific)
-            dfs(i, n-1, atlantic)
-        
-        for j in range(n):
-            dfs(0, j, pacific)
-            dfs(m-1, j, atlantic)
-        
-        return [[i, j] for i in range(m) for j in range(n) if pacific[i][j] and atlantic[i][j]]
+        def dfs(i, j, elevation, visited):
+            if i < 0 or j < 0 or i == len(heights) or j == len(heights[0]) or elevation > heights[i][j] or (i, j) in visited:
+                return
+            
+
+            visited.add((i, j))
+
+            dfs(i + 1, j, heights[i][j], visited)
+            dfs(i - 1, j, heights[i][j], visited)
+            dfs(i, j + 1, heights[i][j], visited)
+            dfs(i, j - 1, heights[i][j], visited)
+
+        pacific, atlantic = set(), set()
+
+        for i in range(len(heights)):
+            dfs(i, 0, float('-inf'), pacific)
+            dfs(i, len(heights[0]) - 1, float('-inf'), atlantic)
+            
+        for i in range(len(heights[0])):
+            dfs(0, i, float('-inf'), pacific)
+            dfs(len(heights) - 1, i, float('-inf'), atlantic)
+            
+        return list(pacific & atlantic)
