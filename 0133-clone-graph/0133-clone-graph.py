@@ -3,18 +3,17 @@ class Solution:
         if not node:
             return None
 
-        oldToNew = {}
+        oldToNew = {node : Node(node.val)}
 
-        def dfs(cur):
-            if cur in oldToNew:
-                return oldToNew[cur]
-            
-            clone = Node(cur.val)
-            oldToNew[cur] = clone
-            
-            for nei in cur.neighbors:
-                clone.neighbors.append(dfs(nei))
-            
-            return clone
+        stack = [node]
         
-        return dfs(node)
+        while stack:
+            cur = stack.pop()
+            for nei in cur.neighbors:
+                if nei not in oldToNew:
+                    oldToNew[nei] = Node(nei.val)
+                    stack.append(nei)
+                oldToNew[cur].neighbors.append(oldToNew[nei])
+        
+        return oldToNew[node]
+                    
