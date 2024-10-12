@@ -13,9 +13,8 @@ class Solution:
         while q and numFresh:
             qLen = len(q)
             minute += 1
-            while qLen:
+            for _ in range(qLen):
                 i, j = q.popleft()
-                qLen -= 1
                 for di, dj in (1, 0), (-1, 0), (0, 1), (0, -1):
                     newI, newJ = i + di, j + dj
                     if newI < 0 or newI >= m or newJ < 0 or newJ >= n or grid[newI][newJ] != 1:
