@@ -1,37 +1,32 @@
 class Solution:
     def platesBetweenCandles(self, s: str, queries: List[List[int]]) -> List[int]:
         n = len(s)
+        nearestCandleRight = [0] * n
+        nearestCandleLeft = [0] * n
+        prefixSums = [0] * n
+        prevRight, prevLeft = -1, n
 
-
-        nearestLeftCandle = [-1]*n
-        nearestRightCandle = [-1]*(n)
-        platesYet = [0]*(n+1)
-        
         for i in range(n):
-            platesYet[i] = platesYet[i-1] + (1 if s[i] == '*' else 0)
-            if s[i] == '|': nearestLeftCandle[i] = i
-            else: 
-                if i-1>=0:
-                    nearestLeftCandle[i] = nearestLeftCandle[i-1]
-                    
-        for i in range(n-1, -1, -1):
-            if s[i] == '|': nearestRightCandle[i] = i
+            if s[n - i - 1] == '|':
+                prevRight = n - i - 1
+            if s[i] == '|':
+                prevLeft = i
+            nearestCandleRight[n - 1 - i] = prevRight
+            nearestCandleLeft[i] = prevLeft
+        prefixSums[0] = 1 if s[0] == '*' else 0
+        for i in range(1,n):
+            prefixSums[i] = prefixSums[i-1] + int(s[i] == '*')
+        print(prefixSums)
+        answer = []
+        for query in queries:
+            leftMostCandle = nearestCandleRight[query[0]]
+            rightMostCandle = nearestCandleLeft[query[1]]
+            if leftMostCandle != -1 and rightMostCandle != n and leftMostCandle < rightMostCandle:
+
+                answer.append(prefixSums[rightMostCandle] - prefixSums[leftMostCandle])
             else:
-                if i+1<n:
-                    nearestRightCandle[i] = nearestRightCandle[i+1]
-                    
-                    
-        res = []
-        
-        
-        for left, right in queries:
-            left, right = nearestRightCandle[left], nearestLeftCandle[right]
-            if right<=left or right == -1 or left == -1: 
-                res.append(0)
-                continue
-            res.append(platesYet[right]-platesYet[left])
-            
-        return res
+                answer.append(0)
+        return answer
                     
         
                     
