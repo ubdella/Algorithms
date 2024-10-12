@@ -1,27 +1,28 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        adjList = {i: [] for i in range(numCourses)}
-        for course, prereq in prerequisites:
-            adjList[course].append(prereq)
-        
-        def dfs(course):
-            if course in visited:
+        path = set() # keeps track of courses in the current path
+        done = set() # courses added to the result. don't gotta visit again
+        result = [] # courses in topological ordering
+        adj = defaultdict(list) # course : [prereqs]
+        for c, p in prerequisites:
+            adj[c].append(p)
+            
+        def dfs(c): # returns False if cycle detected
+            if c in path:
                 return False
-            if course in added:
+            if c in done:
                 return True
-            visited.add(course)
-            for p in adjList[course]:
+            path.add(c)
+            for p in adj[c]:
                 if not dfs(p):
                     return False
-            visited.remove(course)
-            res.append(course)
-            added.add(course)
+            path.remove(c)
+            result.append(c)
+            done.add(c)
             return True
-        
-        added, visited, res = set(), set(), []
-        
-        for c in range(numCourses):
-            if not dfs(c): return []
-        
-        return res
-        
+            
+        for i in range(numCourses):
+            if not dfs(i):
+                return []
+            
+        return result
